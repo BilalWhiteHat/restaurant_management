@@ -1,21 +1,33 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using restaurant_management.Data;
 using restaurant_management.Models;
+using restaurant_management.ViewModels;
 
 namespace restaurant_management.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly RestaurantDbContext _context;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(RestaurantDbContext context, ILogger<HomeController> logger)
     {
+        _context = context;
         _logger = logger;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var viewModel = new HomeViewModel
+        {
+            Restaurants = _context.Restaurants.ToList(),
+            Tables = _context.Tables.ToList(),
+            MenuItems = _context.MenuItems.ToList(),
+            Reservations = _context.Reservations.ToList()
+        };
+
+        return View(viewModel);
     }
 
     public IActionResult Privacy()
