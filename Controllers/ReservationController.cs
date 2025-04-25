@@ -105,6 +105,9 @@ namespace restaurant_management.Controllers
             {
                 try
                 {
+                    // Ensure ReservationDate is in UTC
+                    reservation.ReservationDate = reservation.ReservationDate.ToUniversalTime();
+
                     _context.Update(reservation);
                     await _context.SaveChangesAsync();
                 }
