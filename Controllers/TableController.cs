@@ -82,7 +82,9 @@ namespace restaurant_management.Controllers
             {
                 return NotFound();
             }
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Name", table.RestaurantId);
+
+            ViewBag.RestaurantId = new SelectList(_context.Restaurants, "Id", "Name", table.RestaurantId);
+            ViewBag.Status = new SelectList(Enum.GetValues(typeof(TableStatus)).Cast<TableStatus>(), table.Status);
             return View(table);
         }
 
@@ -116,7 +118,9 @@ namespace restaurant_management.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Name", table.RestaurantId);
+
+            ViewBag.RestaurantId = new SelectList(_context.Restaurants, "Id", "Name", table.RestaurantId);
+            ViewBag.Status = new SelectList(Enum.GetValues(typeof(TableStatus)).Cast<TableStatus>(), table.Status);
             return View(table);
         }
 
