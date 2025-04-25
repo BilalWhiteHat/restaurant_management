@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 // Add DbContext
 builder.Services.AddDbContext<RestaurantDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("RestaurantDb")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("NeonConnection")));
 
 var app = builder.Build();
 
