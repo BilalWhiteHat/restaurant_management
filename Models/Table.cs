@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace restaurant_management.Models
 {
@@ -25,6 +26,7 @@ namespace restaurant_management.Models
         public int RestaurantId { get; set; }
 
         [ForeignKey("RestaurantId")]
+        [ValidateNever]  // Prevent validation on navigation property
         public Restaurant Restaurant { get; set; } = null!;
 
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();

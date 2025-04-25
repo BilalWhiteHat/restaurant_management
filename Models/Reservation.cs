@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace restaurant_management.Models
 {
@@ -35,6 +36,7 @@ namespace restaurant_management.Models
         public int TableId { get; set; }
         
         [ForeignKey("TableId")]
+        [ValidateNever]  // Prevent validation on navigation property
         public Table Table { get; set; } = null!;
     }
 }

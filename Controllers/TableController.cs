@@ -48,13 +48,12 @@ namespace restaurant_management.Controllers
         // GET: Table/Create
         public IActionResult Create()
         {
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Name");
+            ViewBag.RestaurantId = new SelectList(_context.Restaurants, "Id", "Name");
+            ViewBag.Status = new SelectList(Enum.GetValues(typeof(TableStatus)).Cast<TableStatus>());
             return View();
         }
 
         // POST: Table/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,TableNumber,Capacity,Status,RestaurantId")] Table table)
@@ -65,7 +64,8 @@ namespace restaurant_management.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Name", table.RestaurantId);
+            ViewBag.RestaurantId = new SelectList(_context.Restaurants, "Id", "Name", table.RestaurantId);
+            ViewBag.Status = new SelectList(Enum.GetValues(typeof(TableStatus)).Cast<TableStatus>(), table.Status);
             return View(table);
         }
 
@@ -87,8 +87,6 @@ namespace restaurant_management.Controllers
         }
 
         // POST: Table/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,TableNumber,Capacity,Status,RestaurantId")] Table table)
