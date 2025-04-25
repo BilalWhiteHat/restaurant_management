@@ -21,7 +21,7 @@ namespace restaurant_management.Models
         
         [Required(ErrorMessage = "Please select reservation date")]
         [Display(Name = "Reservation Date")]
-        public DateTime ReservationDate { get; set; }
+        public DateTime ReservationDate { get; set; } = DateTime.UtcNow;
         
         [Required(ErrorMessage = "Please enter party size")]
         [Range(1, 20, ErrorMessage = "Party size must be 1-20")]

@@ -57,15 +57,18 @@ namespace restaurant_management.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerName,CustomerPhone,CustomerEmail,ReservationDate,PartySize,SpecialRequests,TableId")] Reservation reservation)
+        public IActionResult Create(Reservation reservation)
         {
             if (ModelState.IsValid)
             {
+                // Ensure ReservationDate is in UTC
+                reservation.ReservationDate = reservation.ReservationDate.ToUniversalTime();
+
                 _context.Add(reservation);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TableId"] = new SelectList(_context.Tables, "Id", "Id", reservation.TableId);
+            ViewBag.TableId = new SelectList(_context.Tables, "Id", "TableNumber", reservation.TableId);
             return View(reservation);
         }
 
